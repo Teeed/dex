@@ -49,7 +49,7 @@ Additional notes:
 
 The dex repo contains scripts for running dex on a Kubernetes cluster with authentication through GitHub. The dex service is exposed using a [node port][node-port] on port 32000. This likely requires a custom `/etc/hosts` entry pointed at one of the cluster's workers.
 
-Because dex uses [CRDs](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/) to store state, no external database is needed. For more details see the [storage documentation](storage.md#kubernetes-third-party-resources).
+Because dex uses [CRDs](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/) to store state, no external database is needed. For more details see the [storage documentation](storage.md#kubernetes-custom-resource-definitions-crds).
 
 There are many different ways to spin up a Kubernetes development cluster, each with different host requirements and support for API server reconfiguration. At this time, this guide does not have copy-pastable examples, but can recommend the following methods for spinning up a cluster:
 
@@ -155,6 +155,9 @@ Please note that the `example-app` will listen at http://127.0.0.1:5555 and can 
 Once the example app is running, choose the GitHub option and grant access to dex to view your profile.
 
 The default redirect uri is http://127.0.0.1:5555/callback and can be changed with the `--redirect-uri` flag and should correspond with your configmap.
+
+Please note the redirect uri is different from the one you filled when creating `GitHub OAuth2 client credentials`. 
+When you login, GitHub first redirects to dex (https://dex.example.com:32000/callback), then dex redirects to the redirect uri of exampl-app.
 
 The printed ID Token can then be used as a bearer token to authenticate against the API server.
 
